@@ -1,0 +1,24 @@
+pip install virtualenv
+python -m venv venv
+.\venv\Scripts\activate
+deactivate
+
+python.exe -m pip install --upgrade pip
+
+pip freeze
+pip freeze > requirements.txt
+pip install -r requirements.txt
+
+django-admin startproject app .
+
+python manage.py startapp nome_app
+python manage.py runserver
+
+python manage.py makemigrations
+python manage.py migrate
+
+python manage.py createsuperuser
+
+http://127.0.0.1:8000/gender
+
+
