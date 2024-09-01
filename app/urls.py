@@ -6,5 +6,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('genres/', genre_create_list_view, name='genre-create-list'),
     path('genres/<int:pk>', genre_detail_view, name='genre-detail-view'),
-    
 ]
