@@ -1,49 +1,65 @@
-import json
-from django.http import JsonResponse
+from rest_framework import generics
 from genres.models import Genre
-from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import get_object_or_404
+from .serializers import GenreSerializer
 
+###Métodos DRF
 #Lista Todos ou Adiciona Generos
-@csrf_exempt
-def genre_create_list_view(request):
-    if request.method == 'GET':
-        genres = Genre.objects.all().order_by('name')
+class GenreCreateListView(generics.ListCreateAPIView):
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializer
 
-        data = [{'id': genre.id, 'name': genre.name} for genre in genres]
+#Lista, Altera ou Exclui um Genero Específico
+class GenreRetriveCreateListView (generics.RetrieveUpdateDestroyAPIView):
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializer
 
-        return JsonResponse(data, safe=False)
+
+###Métodos não DRF
+# import json
+# from django.views.decorators.csrf import csrf_exempt
+# from django.shortcuts import get_object_or_404
+# from django.http import JsonResponse
+#Lista Todos ou Adiciona Generos
+# @csrf_exempt
+# def genre_create_list_view(request):
+#     if request.method == 'GET':
+#         genres = Genre.objects.all().order_by('name')
+
+#         data = [{'id': genre.id, 'name': genre.name} for genre in genres]
+
+#         return JsonResponse(data, safe=False)
     
-    elif request.method == 'POST':
-        data = json.loads(request.body.decode('utf-8'))
-        new_genre = Genre(name=data['name'])
-        new_genre.save()
-        return JsonResponse(
-            {'id': new_genre.id,
-             'name': new_genre.name},
-             status=201,)
+#     elif request.method == 'POST':
+#         data = json.loads(request.body.decode('utf-8'))
+#         new_genre = Genre(name=data['name'])
+#         new_genre.save()
+#         return JsonResponse(
+#             {'id': new_genre.id,
+#              'name': new_genre.name},
+#              status=201,)
     
 #Lista, Altera ou Exclui um Genero Específico
-@csrf_exempt
-def genre_detail_view(request, pk):
-    genre = get_object_or_404(Genre, pk=pk)
+# @csrf_exempt
+# def genre_detail_view(request, pk):
+#     genre = get_object_or_404(Genre, pk=pk)
 
-    if request.method == 'GET':#Lista
-        data = {'id': genre.id, 'name': genre.name}
-        return JsonResponse(data)
+#     if request.method == 'GET':#Lista
+#         data = {'id': genre.id, 'name': genre.name}
+#         return JsonResponse(data)
     
-    elif request.method == 'PUT':#Altera
-        data = json.loads(request.body.decode('utf-8'))
-        genre.name = data['name']
-        genre.save()
+#     elif request.method == 'PUT':#Altera
+#         data = json.loads(request.body.decode('utf-8'))
+#         genre.name = data['name']
+#         genre.save()
 
-        return JsonResponse(
-            {'id': genre.id,
-             'name': genre.name})
+#         return JsonResponse(
+#             {'id': genre.id,
+#              'name': genre.name})
 
-    elif request.method == 'DELETE':#Exclui
-        genre.delete()
+#     elif request.method == 'DELETE':#Exclui
+#         genre.delete()
         
-        return JsonResponse({'message': 'Gênero Excluído com Sucesso'},
-                            status = 204,
-                            )
+#         return JsonResponse({'message': 'Gênero Excluído com Sucesso'},
+#                             status = 204,
+#                             )
+###Métodos não DRF
