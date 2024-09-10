@@ -16,3 +16,4 @@ class Movie(models.Model):
     
     class Meta:
         ordering = ['title']  
+        verbose_name = 'Filme'
