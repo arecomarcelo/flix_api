@@ -1,5 +1,6 @@
 from rest_framework import permissions
 
+## Inativado Utilizando a GlobalDefaultPermission Criada
 class GenrePermissionClass(permissions.BasePermission):
 
     def has_permission(self, request, view):
