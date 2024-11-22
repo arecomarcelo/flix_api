@@ -2,9 +2,10 @@ from django.db import models
 from genres.models import Genre
 from actors.models import Actor
 
+
 class Movie(models.Model):
     title = models.CharField(max_length=500)
-    gender = models.ForeignKey(Genre, 
+    gender = models.ForeignKey(Genre,
                                on_delete=models.PROTECT,
                                related_name='movies')
     release_date = models.DateField(null=True, blank=True)
@@ -13,7 +14,7 @@ class Movie(models.Model):
 
     def __str__(self):
         return self.title
-    
+
     class Meta:
-        ordering = ['title']  
+        ordering = ['title']
         verbose_name = 'Filme'
